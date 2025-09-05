@@ -1,0 +1,241 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* OLX-inspired Design System with Glass Morphism */
+
+@layer base {
+  :root {
+    /* Core Colors */
+    --background: 240 10% 98%;
+    --foreground: 222.2 84% 4.9%;
+    --surface: 0 0% 100%;
+    
+    /* Glass Effects */
+    --glass-bg: 255 255 255 / 0.1;
+    --glass-border: 255 255 255 / 0.2;
+    --glass-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+    --glass-backdrop: blur(8px);
+    
+    /* Brand Colors */
+    --primary: 174 62% 47%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 174 100% 70%;
+    
+    --secondary: 240 5% 96%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    
+    /* Accent Colors */
+    --accent: 142 76% 36%;
+    --accent-foreground: 0 0% 100%;
+    --accent-light: 142 76% 86%;
+    
+    /* Semantic Colors */
+    --success: 142 76% 36%;
+    --success-foreground: 0 0% 100%;
+    --success-light: 142 76% 94%;
+    
+    --warning: 45 93% 58%;
+    --warning-foreground: 0 0% 100%;
+    --warning-light: 45 93% 94%;
+    
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --destructive-light: 0 84% 94%;
+    
+    /* Surface Colors */
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 9% 46%;
+    
+    /* Interactive */
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 174 62% 47%;
+    
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
+    --gradient-glass: linear-gradient(135deg, 
+      rgba(255, 255, 255, 0.1), 
+      rgba(255, 255, 255, 0.05));
+    --gradient-surface: linear-gradient(180deg, 
+      hsl(var(--surface)), 
+      hsl(var(--background)));
+    
+    /* Shadows */
+    --shadow-glass: 0 8px 32px rgba(31, 38, 135, 0.37);
+    --shadow-card: 0 4px 16px rgba(0, 0, 0, 0.05);
+    --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.1);
+    
+    --radius: 0.75rem;
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    /* Core Colors */
+    --background: 222 47% 6%;
+    --foreground: 210 40% 98%;
+    --surface: 222 40% 8%;
+    
+    /* Glass Effects */
+    --glass-bg: 0 0 0 / 0.2;
+    --glass-border: 255 255 255 / 0.1;
+    --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+    
+    /* Brand Colors */
+    --primary: 174 70% 60%;
+    --primary-foreground: 222 47% 6%;
+    --primary-glow: 174 100% 80%;
+    
+    --secondary: 222 40% 12%;
+    --secondary-foreground: 210 40% 98%;
+    
+    /* Accent Colors */
+    --accent: 142 70% 45%;
+    --accent-foreground: 0 0% 100%;
+    --accent-light: 142 70% 15%;
+    
+    /* Semantic Colors */
+    --success: 142 70% 45%;
+    --success-foreground: 0 0% 100%;
+    --success-light: 142 70% 10%;
+    
+    --warning: 45 93% 58%;
+    --warning-foreground: 0 0% 100%;
+    --warning-light: 45 93% 12%;
+    
+    --destructive: 0 84% 65%;
+    --destructive-foreground: 0 0% 100%;
+    --destructive-light: 0 84% 12%;
+    
+    /* Surface Colors */
+    --card: 222 40% 8%;
+    --card-foreground: 210 40% 98%;
+    
+    --popover: 222 40% 8%;
+    --popover-foreground: 210 40% 98%;
+    
+    --muted: 222 40% 12%;
+    --muted-foreground: 215 20% 65%;
+    
+    /* Interactive */
+    --border: 222 40% 15%;
+    --input: 222 40% 12%;
+    --ring: 174 70% 60%;
+    
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
+    --gradient-glass: linear-gradient(135deg, 
+      rgba(255, 255, 255, 0.05), 
+      rgba(255, 255, 255, 0.02));
+    --gradient-surface: linear-gradient(180deg, 
+      hsl(var(--surface)), 
+      hsl(var(--background)));
+    
+    /* Shadows */
+    --shadow-glass: 0 8px 32px rgba(0, 0, 0, 0.6);
+    --shadow-card: 0 4px 16px rgba(0, 0, 0, 0.3);
+    --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.4);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground transition-colors duration-300;
+  }
+}
+
+@layer components {
+  /* Glass Morphism Components */
+  .glass-card {
+    @apply backdrop-blur-md border shadow-[0_8px_32px_rgba(31,38,135,0.37)];
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+  
+  .dark .glass-card {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+  }
+  
+  .glass-navbar {
+    @apply backdrop-blur-xl border-b;
+    background: rgba(255, 255, 255, 0.7);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+  
+  .dark .glass-navbar {
+    background: rgba(0, 0, 0, 0.7);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  .glass-button {
+    @apply backdrop-blur-sm border transition-all duration-300;
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+  
+  .glass-button:hover {
+    background: rgba(255, 255, 255, 0.3);
+  }
+  
+  .dark .glass-button {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+  
+  .dark .glass-button:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+  
+  /* Skeleton Components */
+  .skeleton {
+    @apply animate-pulse bg-muted rounded-md;
+  }
+  
+  .skeleton-text {
+    @apply skeleton h-4 w-full;
+  }
+  
+  .skeleton-title {
+    @apply skeleton h-6 w-3/4;
+  }
+  
+  .skeleton-image {
+    @apply skeleton aspect-video w-full;
+  }
+  
+  /* Hover Effects */
+  .hover-lift {
+    @apply transition-all duration-300 hover:scale-[1.02] hover:shadow-hover;
+  }
+  
+  .hover-glow {
+    @apply transition-all duration-300 hover:shadow-[0_0_20px_rgba(var(--primary-glow),0.3)];
+  }
+}
