@@ -31,13 +31,15 @@ interface HomeFiltersProps {
   updateFilters: (filters: any) => void;
   clearFilters: () => void;
   adsCount: number;
+  showMobileButton?: boolean; // New prop to control mobile button visibility
 }
 
 const HomeFiltersComponent: React.FC<HomeFiltersProps> = ({ 
   filters, 
   updateFilters, 
   clearFilters, 
-  adsCount 
+  adsCount,
+  showMobileButton = false
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [priceOpen, setPriceOpen] = useState(true);
@@ -91,6 +93,7 @@ const HomeFiltersComponent: React.FC<HomeFiltersProps> = ({
     if (filters.query) count++;
     return count;
   };
+
 
   const FilterContent = () => (
     <div className="space-y-6">
@@ -153,8 +156,8 @@ const HomeFiltersComponent: React.FC<HomeFiltersProps> = ({
 
   return (
     <>
-      {/* Desktop Filters */}
-      <div className="hidden lg:block w-80 space-y-6">
+      {/* Desktop/Tablet Sidebar Filters */}
+      <div className="hidden md:block w-80 space-y-6">
         <div className="glass-card p-6 rounded-lg">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-xl font-semibold">Filters</h2>
@@ -164,11 +167,11 @@ const HomeFiltersComponent: React.FC<HomeFiltersProps> = ({
         </div>
       </div>
 
-      {/* Mobile Filter Sheet */}
-      <div className="lg:hidden">
+      {/* Mobile Filter Sheet - Only show when showMobileButton is true */}
+      {showMobileButton && (
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
           <SheetTrigger asChild>
-            <Button variant="outline" className="glass-button flex items-center gap-2">
+            <Button variant="outline" className="glass-button flex items-center gap-2 w-full">
               <Filter className="h-4 w-4" />
               Filters
               {getActiveFiltersCount() > 0 && (
@@ -178,19 +181,22 @@ const HomeFiltersComponent: React.FC<HomeFiltersProps> = ({
               )}
             </Button>
           </SheetTrigger>
-          <SheetContent side="left" className="w-80 glass-card">
-            <SheetHeader>
+          <SheetContent 
+            side="left" 
+            className="w-full sm:w-80 max-w-sm glass-card p-0"
+          >
+            <SheetHeader className="px-6 pt-6">
               <SheetTitle>Filters</SheetTitle>
               <SheetDescription>
                 {adsCount} results found
               </SheetDescription>
             </SheetHeader>
-            <div className="mt-6 max-h-[calc(100vh-8rem)] overflow-y-auto">
+            <div className="px-6 pb-6 mt-6 max-h-[calc(100vh-10rem)] overflow-y-auto">
               <FilterContent />
             </div>
           </SheetContent>
         </Sheet>
-      </div>
+      )}
     </>
   );
 };

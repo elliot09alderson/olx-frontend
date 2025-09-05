@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Trash2, Edit, Eye, Heart } from 'lucide-react';
 import { wishlistService } from '../utils/wishlistService';
-import { useApp } from '../contexts/AppContext';
+import { useAuth } from '../contexts/AuthContext';
 
 interface Ad {
   _id: string;
@@ -48,7 +48,7 @@ export const AdCard: React.FC<AdCardProps> = ({
   onDelete,
   onWishlistToggle
 }) => {
-  const { user } = useApp();
+  const { user } = useAuth();
   const [isInWishlist, setIsInWishlist] = useState(false);
   const [isWishlistLoading, setIsWishlistLoading] = useState(false);
 
@@ -171,16 +171,16 @@ export const AdCard: React.FC<AdCardProps> = ({
             <button
               onClick={handleWishlistToggle}
               disabled={isWishlistLoading}
-              className={`p-2 rounded-full transition-all duration-200 glass-button ${
+              className={`p-2 rounded-full transition-all duration-300 backdrop-blur-md border shadow-lg ${
                 isInWishlist 
-                  ? 'bg-red-500 text-white hover:bg-red-600' 
-                  : 'bg-white/90 text-red-500 hover:bg-red-50'
-              } ${isWishlistLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  ? 'bg-red-500/80 text-white border-red-400/50 hover:bg-red-500/90 hover:shadow-red-500/25' 
+                  : 'bg-white/80 text-red-500 border-white/50 hover:bg-red-50/80 hover:shadow-red-500/20'
+              } ${isWishlistLoading ? 'opacity-50 cursor-not-allowed' : 'hover:scale-105'}`}
               title={isInWishlist ? 'Remove from wishlist' : 'Add to wishlist'}
             >
               <Heart 
-                className={`h-4 w-4 transition-transform duration-200 ${
-                  isInWishlist ? 'fill-current scale-110' : 'hover:scale-110'
+                className={`h-4 w-4 transition-all duration-300 ${
+                  isInWishlist ? 'fill-current scale-110 drop-shadow-sm' : 'hover:scale-110'
                 } ${isWishlistLoading ? 'animate-pulse' : ''}`} 
               />
             </button>

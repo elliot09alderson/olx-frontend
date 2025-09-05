@@ -52,8 +52,8 @@ export const LocationFilter = React.memo(({
         </Button>
       </CollapsibleTrigger>
       <CollapsibleContent className="space-y-3 mt-3">
-        <div className="space-y-2">
-          <div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div className="space-y-1">
             <Label htmlFor="city" className="text-sm">City</Label>
             <Input
               id="city"
@@ -64,7 +64,7 @@ export const LocationFilter = React.memo(({
               className="glass-button"
             />
           </div>
-          <div>
+          <div className="space-y-1">
             <Label htmlFor="state" className="text-sm">State</Label>
             <Input
               id="state"

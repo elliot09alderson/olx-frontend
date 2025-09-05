@@ -249,12 +249,12 @@ export const UploadAd = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-surface p-4">
-      <div className="container mx-auto max-w-4xl">
-        <Card className="glass-card">
-          <CardHeader>
-            <CardTitle className="text-2xl font-bold flex items-center gap-2">
-              <Camera className="h-6 w-6" />
+    <div className="min-h-screen bg-gradient-surface px-0 py-4 sm:p-4">
+      <div className="container mx-auto max-w-4xl px-0 sm:px-4">
+        <Card className="glass-card rounded-none sm:rounded-lg border-x-0 sm:border-x">
+          <CardHeader className="px-4 sm:px-6">
+            <CardTitle className="text-xl sm:text-2xl font-bold flex items-center gap-2">
+              <Camera className="h-5 w-5 sm:h-6 sm:w-6" />
               Post Your Ad
             </CardTitle>
             <CardDescription>
@@ -262,7 +262,7 @@ export const UploadAd = () => {
             </CardDescription>
           </CardHeader>
 
-          <CardContent>
+          <CardContent className="px-4 sm:px-6">
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Images Upload */}
               <div className="space-y-4">

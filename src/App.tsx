@@ -14,6 +14,7 @@ import { Login } from "./pages/Login";
 import { Signup } from "./pages/Signup";
 import { AdDetail } from "./pages/AdDetail";
 import { Profile } from "./pages/Profile";
+import { Wishlist } from "./pages/Wishlist";
 import { AdminPanel } from "./pages/AdminPanel";
 import { UploadAd } from "./pages/UploadAd";
 import NotFound from "./pages/NotFound";
@@ -52,6 +53,11 @@ const App = () => (
                   <Route path="/my-ads" element={
                     <ProtectedRoute>
                       <Profile />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="/wishlist" element={
+                    <ProtectedRoute>
+                      <Wishlist />
                     </ProtectedRoute>
                   } />
                   <Route path="/admin" element={

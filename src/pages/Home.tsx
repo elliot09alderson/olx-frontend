@@ -150,43 +150,23 @@ export const Home = () => {
     <div className="min-h-screen bg-background pt-24">
       <div className="container mx-auto px-4">
         <div className="flex gap-8">
-          {/* Filters Sidebar */}
+          {/* Filters Sidebar - Desktop/Tablet Only */}
           <HomeFilters filters={filters} updateFilters={updateFilters} clearFilters={clearFilters} adsCount={ads.length} />
 
           {/* Main Content */}
           <div className="flex-1">
             {/* Header */}
             <div className="glass-card p-4 rounded-lg mb-6">
-              <div className="flex items-center justify-between mb-4">
-                <h1 className="text-2xl font-bold flex items-center gap-2">
-                  All Ads ({ads.length})
-                  {isPriceFiltering && (
-                    <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
-                  )}
-                </h1>
-                
-                <div className="flex items-center gap-2">
-                  {/* Mobile Filter Button */}
-                  <div className="lg:hidden">
-                    <HomeFilters filters={filters} updateFilters={updateFilters} clearFilters={clearFilters} adsCount={ads.length} />
-                  </div>
-
-                  {/* Sort Options */}
-                  <Select value={sortBy} onValueChange={(value: SortOption) => setSortBy(value)}>
-                    <SelectTrigger className="w-48 glass-button">
-                      <SlidersHorizontal className="h-4 w-4 mr-2" />
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="newest">Newest First</SelectItem>
-                      <SelectItem value="oldest">Oldest First</SelectItem>
-                      <SelectItem value="price-low">Price: Low to High</SelectItem>
-                      <SelectItem value="price-high">Price: High to Low</SelectItem>
-                      <SelectItem value="featured">Featured First</SelectItem>
-                    </SelectContent>
-                  </Select>
-
-                  {/* View Mode Toggle */}
+              <div className="flex flex-col gap-4">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                  <h1 className="text-xl sm:text-2xl font-bold flex items-center gap-2">
+                    All Ads ({ads.length})
+                    {isPriceFiltering && (
+                      <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
+                    )}
+                  </h1>
+                  
+                  {/* Desktop View Mode Toggle */}
                   <div className="hidden md:flex border border-border rounded-lg p-1 glass-button">
                     <Button
                       variant={viewMode === 'grid' ? 'default' : 'ghost'}
@@ -202,6 +182,31 @@ export const Home = () => {
                     >
                       <List className="h-4 w-4" />
                     </Button>
+                  </div>
+                </div>
+
+                {/* Mobile Filter and Sort Options */}
+                <div className="flex flex-col gap-2 items-end">
+                  {/* Mobile Filter Button */}
+                  <div className="md:hidden w-full sm:max-w-xs">
+                    <HomeFilters filters={filters} updateFilters={updateFilters} clearFilters={clearFilters} adsCount={ads.length} showMobileButton={true} />
+                  </div>
+
+                  {/* Sort Options */}
+                  <div className="w-full sm:max-w-xs">
+                    <Select value={sortBy} onValueChange={(value: SortOption) => setSortBy(value)}>
+                      <SelectTrigger className="w-full glass-button">
+                        <SlidersHorizontal className="h-4 w-4 mr-2" />
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="newest">Newest First</SelectItem>
+                        <SelectItem value="oldest">Oldest First</SelectItem>
+                        <SelectItem value="price-low">Price: Low to High</SelectItem>
+                        <SelectItem value="price-high">Price: High to Low</SelectItem>
+                        <SelectItem value="featured">Featured First</SelectItem>
+                      </SelectContent>
+                    </Select>
                   </div>
                 </div>
               </div>
@@ -284,6 +289,7 @@ export const Home = () => {
                   <AdCard
                     key={ad._id}
                     ad={ad}
+                    showWishlistButton={true}
                   />
                 ))}
               </div>

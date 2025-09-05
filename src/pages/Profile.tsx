@@ -5,7 +5,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { useAuth } from '@/contexts/AuthContext';
 import { AdCard } from '@/components/AdCard';
-import { Edit, Mail, Calendar, MapPin, Star, Plus, Grid, List } from 'lucide-react';
+import { Mail, Calendar, MapPin, Star, Plus, Grid, List } from 'lucide-react';
 import { adService } from '../utils/adService';
 import { useNavigate } from 'react-router-dom';
 
@@ -80,34 +80,27 @@ export const Profile = () => {
           {/* Profile Header */}
           <Card className="glass-card">
             <CardContent className="p-6">
-              <div className="flex items-start justify-between mb-6">
-                <div className="flex items-center gap-4">
-                  <Avatar className="h-20 w-20">
-                    <AvatarImage src={user.avatar} alt={user.fullname} />
-                    <AvatarFallback className="text-2xl">
-                      {user.fullname?.charAt(0) || 'U'}
-                    </AvatarFallback>
-                  </Avatar>
-                  
-                  <div>
-                    <h1 className="text-2xl font-bold">{user.fullname}</h1>
-                    <p className="text-muted-foreground flex items-center gap-1">
-                      <Mail className="h-4 w-4" />
-                      {user.email}
-                    </p>
-                    <div className="flex items-center gap-2 mt-2">
-                      <Badge variant="secondary">{user.role === 'admin' ? 'Admin' : 'User'}</Badge>
-                      {user.role === 'admin' && (
-                        <Badge variant="outline">Verified</Badge>
-                      )}
-                    </div>
+              <div className="flex items-center gap-4 mb-6">
+                <Avatar className="h-20 w-20">
+                  <AvatarImage src={user.avatar} alt={user.fullname} />
+                  <AvatarFallback className="text-2xl">
+                    {user.fullname?.charAt(0) || 'U'}
+                  </AvatarFallback>
+                </Avatar>
+                
+                <div>
+                  <h1 className="text-2xl font-bold">{user.fullname}</h1>
+                  <p className="text-muted-foreground flex items-center gap-1">
+                    <Mail className="h-4 w-4" />
+                    {user.email}
+                  </p>
+                  <div className="flex items-center gap-2 mt-2">
+                    <Badge variant="secondary">{user.role === 'admin' ? 'Admin' : 'User'}</Badge>
+                    {user.role === 'admin' && (
+                      <Badge variant="outline">Verified</Badge>
+                    )}
                   </div>
                 </div>
-                
-                <Button variant="outline" className="glass-button">
-                  <Edit className="h-4 w-4 mr-2" />
-                  Edit Profile
-                </Button>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

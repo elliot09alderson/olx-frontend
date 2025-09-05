@@ -25,22 +25,34 @@ import { ImageCarousel } from '@/components/ImageCarousel';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 import { adService } from '../utils/adService';
+import { wishlistService } from '../utils/wishlistService';
 
 export const AdDetail = () => {
   const { slug } = useParams<{ slug: string }>();
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, user } = useAuth();
   const { toast } = useToast();
   const navigate = useNavigate();
   
   const [ad, setAd] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [isInWishlist, setIsInWishlist] = useState(false);
+  const [isWishlistLoading, setIsWishlistLoading] = useState(false);
 
   useEffect(() => {
     if (slug) {
       fetchAd();
     }
   }, [slug]);
+
+  // Check wishlist status when user changes
+  useEffect(() => {
+    if (user && ad?._id) {
+      checkWishlistStatus(ad._id);
+    } else if (!user) {
+      setIsInWishlist(false);
+    }
+  }, [user, ad?._id]);
 
   const fetchAd = async () => {
     try {
@@ -53,6 +65,11 @@ export const AdDetail = () => {
       if (response.success) {
         setAd(response.data.ad);
         console.log('Ad data set:', response.data.ad);
+        
+        // Check if ad is in wishlist after setting ad data
+        if (user && response.data.ad._id) {
+          checkWishlistStatus(response.data.ad._id);
+        }
       } else {
         setError(response.message || 'Ad not found');
         console.error('API error:', response.message);
@@ -62,6 +79,60 @@ export const AdDetail = () => {
       setError('Failed to fetch ad details');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const checkWishlistStatus = async (adId: string) => {
+    try {
+      const result = await wishlistService.isInWishlist(adId);
+      if (result.success) {
+        setIsInWishlist(result.data.isInWishlist);
+      }
+    } catch (error) {
+      console.error('Error checking wishlist status:', error);
+    }
+  };
+
+  const handleWishlistToggle = async () => {
+    if (!user) {
+      toast({
+        variant: "destructive",
+        title: "Login required",
+        description: "Please login to add items to wishlist",
+      });
+      navigate('/login');
+      return;
+    }
+
+    if (!ad?._id) return;
+
+    setIsWishlistLoading(true);
+    
+    try {
+      const result = await wishlistService.toggleWishlist(ad._id, isInWishlist);
+      
+      if (result.success) {
+        setIsInWishlist(!isInWishlist);
+        toast({
+          title: isInWishlist ? "Removed from wishlist" : "Added to wishlist",
+          description: isInWishlist ? "Item removed from your wishlist" : "Item saved to your wishlist",
+        });
+      } else {
+        toast({
+          variant: "destructive",
+          title: "Error",
+          description: result.message || 'Failed to update wishlist',
+        });
+      }
+    } catch (error) {
+      console.error('Wishlist toggle error:', error);
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: 'Failed to update wishlist',
+      });
+    } finally {
+      setIsWishlistLoading(false);
     }
   };
 
@@ -191,8 +262,23 @@ export const AdDetail = () => {
             </Button>
             
             <div className="flex items-center gap-2">
-              <Button variant="ghost" size="icon" className="glass-button">
-                <Heart className="h-4 w-4" />
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                onClick={handleWishlistToggle}
+                disabled={isWishlistLoading}
+                className={`transition-all duration-300 backdrop-blur-md border shadow-lg ${
+                  isInWishlist 
+                    ? 'bg-red-500/80 text-white border-red-400/50 hover:bg-red-500/90' 
+                    : 'bg-white/80 text-red-500 border-white/50 hover:bg-red-50/80'
+                } ${isWishlistLoading ? 'opacity-50 cursor-not-allowed' : 'hover:scale-105'}`}
+                title={isInWishlist ? 'Remove from wishlist' : 'Add to wishlist'}
+              >
+                <Heart 
+                  className={`h-4 w-4 transition-all duration-300 ${
+                    isInWishlist ? 'fill-current scale-110 drop-shadow-sm' : 'hover:scale-110'
+                  } ${isWishlistLoading ? 'animate-pulse' : ''}`} 
+                />
               </Button>
               <Button variant="ghost" size="icon" onClick={handleShare} className="glass-button">
                 <Share2 className="h-4 w-4" />
@@ -326,9 +412,27 @@ export const AdDetail = () => {
                 <h3 className="text-lg font-semibold mb-4">Quick Actions</h3>
                 
                 <div className="space-y-2">
-                  <Button variant="outline" className="w-full glass-button justify-start">
-                    <Heart className="h-4 w-4 mr-2" />
-                    Save to Favorites
+                  <Button 
+                    variant="outline" 
+                    onClick={handleWishlistToggle}
+                    disabled={isWishlistLoading}
+                    className={`w-full justify-start transition-all duration-300 backdrop-blur-md border shadow-lg ${
+                      isInWishlist 
+                        ? 'bg-red-500/10 text-red-600 border-red-400/50 hover:bg-red-500/20' 
+                        : 'bg-white/80 text-red-500 border-white/50 hover:bg-red-50/80'
+                    } ${isWishlistLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  >
+                    <Heart 
+                      className={`h-4 w-4 mr-2 transition-all duration-300 ${
+                        isInWishlist ? 'fill-current' : ''
+                      } ${isWishlistLoading ? 'animate-pulse' : ''}`} 
+                    />
+                    {isWishlistLoading 
+                      ? 'Updating...' 
+                      : isInWishlist 
+                        ? 'Remove from Favorites' 
+                        : 'Save to Favorites'
+                    }
                   </Button>
                   
                   <Button variant="outline" className="w-full glass-button justify-start" onClick={handleShare}>

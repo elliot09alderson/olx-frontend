@@ -3,11 +3,11 @@ import { Heart, Loader2, ShoppingBag } from 'lucide-react';
 import { AdCard } from '@/components/AdCard';
 import { Button } from '@/components/ui/button';
 import { wishlistService } from '../utils/wishlistService';
-import { useApp } from '../contexts/AppContext';
+import { useAuth } from '../contexts/AuthContext';
 import { Link } from 'react-router-dom';
 
 export const Wishlist = () => {
-  const { user } = useApp();
+  const { user } = useAuth();
   const [wishlistItems, setWishlistItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');

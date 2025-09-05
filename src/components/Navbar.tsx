@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Search, Heart, User, LogOut, Moon, Sun, Menu, X, Shield, Plus } from "lucide-react";
+import { Search, Heart, User, LogOut, Moon, Sun, Menu, X, Shield, Plus, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useAuth } from "@/contexts/AuthContext";
@@ -38,13 +38,12 @@ export const Navbar = () => {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-lg">O</span>
-            </div>
-            <span className="font-bold text-xl text-foreground hidden sm:block">
-              OLX Clone
-            </span>
+          <Link to="/" className="flex items-center">
+            <img 
+              src="/logo.svg" 
+              alt="OLX Logo" 
+              className="h-10 w-auto hover:scale-105 transition-transform duration-200" 
+            />
           </Link>
 
           {/* Search Bar - Desktop */}
@@ -97,9 +96,12 @@ export const Navbar = () => {
               <Button
                 variant="ghost"
                 size="icon"
+                asChild
                 className="glass-button hidden sm:flex"
               >
-                <Heart className="h-4 w-4" />
+                <Link to="/wishlist">
+                  <Heart className="h-4 w-4" />
+                </Link>
               </Button>
             )}
 
@@ -131,8 +133,14 @@ export const Navbar = () => {
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild className="hover:bg-white/10 dark:hover:bg-white/5 focus:bg-white/10 dark:focus:bg-white/5">
-                    <Link to="/my-ads" className="flex items-center hover:text-foreground">
+                    <Link to="/wishlist" className="flex items-center hover:text-foreground">
                       <Heart className="mr-2 h-4 w-4" />
+                      My Wishlist
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild className="hover:bg-white/10 dark:hover:bg-white/5 focus:bg-white/10 dark:focus:bg-white/5">
+                    <Link to="/my-ads" className="flex items-center hover:text-foreground">
+                      <FileText className="mr-2 h-4 w-4" />
                       My Ads
                     </Link>
                   </DropdownMenuItem>
@@ -236,8 +244,14 @@ export const Navbar = () => {
                     </Link>
                   </Button>
                   <Button variant="ghost" asChild className="justify-start">
-                    <Link to="/my-ads" onClick={() => setMobileMenuOpen(false)}>
+                    <Link to="/wishlist" onClick={() => setMobileMenuOpen(false)}>
                       <Heart className="mr-2 h-4 w-4" />
+                      My Wishlist
+                    </Link>
+                  </Button>
+                  <Button variant="ghost" asChild className="justify-start">
+                    <Link to="/my-ads" onClick={() => setMobileMenuOpen(false)}>
+                      <FileText className="mr-2 h-4 w-4" />
                       My Ads
                     </Link>
                   </Button>

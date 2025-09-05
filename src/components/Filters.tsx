@@ -150,7 +150,7 @@ export const Filters = () => {
           </Button>
         </CollapsibleTrigger>
         <CollapsibleContent className="space-y-3 mt-3">
-          <div className="grid grid-cols-2 gap-2">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
             <div>
               <Label htmlFor="priceMin" className="text-sm">Min Price</Label>
               <Input
@@ -233,7 +233,7 @@ export const Filters = () => {
       <div className="lg:hidden">
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
           <SheetTrigger asChild>
-            <Button variant="outline" className="glass-button flex items-center gap-2">
+            <Button variant="outline" className="glass-button flex items-center gap-2 w-full sm:w-auto">
               <Filter className="h-4 w-4" />
               Filters
               {getActiveFiltersCount() > 0 && (
@@ -243,14 +243,17 @@ export const Filters = () => {
               )}
             </Button>
           </SheetTrigger>
-          <SheetContent side="left" className="w-80 glass-card">
-            <SheetHeader>
+          <SheetContent 
+            side="left" 
+            className="w-full sm:w-80 max-w-sm glass-card p-0"
+          >
+            <SheetHeader className="px-6 pt-6">
               <SheetTitle>Filters</SheetTitle>
               <SheetDescription>
                 {filteredAds.length} results found
               </SheetDescription>
             </SheetHeader>
-            <div className="mt-6 max-h-[calc(100vh-8rem)] overflow-y-auto">
+            <div className="px-6 pb-6 mt-6 max-h-[calc(100vh-10rem)] overflow-y-auto">
               <FilterContent />
             </div>
           </SheetContent>
